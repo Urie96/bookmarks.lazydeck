@@ -5,7 +5,6 @@ local CACHE_KEY = 'bookmarks'
 
 local defaults = {
   keymap = {
-    mark_add = 'ma',
     delete = 'dd',
     open = '<enter>',
   },
@@ -158,9 +157,7 @@ local function build_entries()
         kind = 'info',
         display = deck.style.line {
           deck.style.span('No bookmarks yet. '):fg 'yellow',
-          deck.style.span('Press '):fg 'dark_gray',
-          deck.style.span(state.config.keymap.mark_add):fg 'cyan',
-          deck.style.span(' on any page to add it.'):fg 'dark_gray',
+          deck.style.span('Use a configured global key to add the current page.'):fg 'dark_gray',
         },
       },
     }
@@ -200,10 +197,9 @@ function M.setup(opt)
   if state.setup_done then return end
   state.setup_done = true
 
-  deck.keymap.set('main', state.config.keymap.mark_add, add_current_page, {
-    desc = 'add current page to bookmarks',
-  })
 end
+
+M.add = add_current_page
 
 function M.list(path, cb)
   if #path == 1 then
@@ -221,7 +217,7 @@ function M.preview(entry, cb)
     cb(deck.style.text {
       deck.style.line { deck.style.span('No bookmarks yet'):fg('yellow'):bold() },
       deck.style.line { '' },
-      deck.style.line { 'Navigate to any page and press ', deck.style.span(state.config.keymap.mark_add):fg 'cyan', ' to add it.' },
+      deck.style.line { 'Navigate to any page and use your configured global key to add it.' },
     })
     return
   end
