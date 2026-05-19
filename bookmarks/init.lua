@@ -1,5 +1,13 @@
 local M = {}
 
+function M.meta()
+  return {
+    icon = '󰃀',
+    desc = 'Bookmark manager',
+    color = 'yellow',
+  }
+end
+
 local NAMESPACE = 'bookmarks.lazydeck'
 local CACHE_KEY = 'bookmarks'
 
